@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}Edit Marks | {{ student.name }}{% endblock %}
+{% block extra_css %}
+<style>
+.edit-page{padding:2.5rem 2rem;max-width:1100px;margin:0 auto;}
+.student-id-card{background:linear-gradient(135deg,var(--navy),#1a3a6e);border-radius:16px;padding:1.75rem 2rem;display:flex;align-items:center;gap:1.25rem;margin-bottom:2rem;}
+.id-avatar{width:54px;height:54px;border-radius:13px;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--navy);flex-shrink:0;}
+.id-info h2{font-family:'Playfair Display',serif;color:var(--white);font-size:1.3rem;}
+.id-info p{color:rgba(255,255,255,.58);font-size:.8rem;margin-top:.2rem;display:flex;align-items:center;gap:.4rem;}
+.id-info p svg{width:13px;height:13px;}
+.form-section{background:var(--white);border-radius:20px;border:1px solid var(--border);margin-bottom:1.5rem;overflow:hidden;}
+.form-section-header{padding:1.2rem 1.75rem;border-bottom:1px solid var(--border);font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--navy);display:flex;align-items:center;gap:.5rem;}
+.form-section-header svg{width:18px;height:18px;color:var(--slate);}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;padding:1.5rem 1.75rem;}
+.fg{display:flex;flex-direction:column;gap:.38rem;}
+.fg label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate);display:flex;align-items:center;gap:.35rem;}
+.fg label svg{width:12px;height:12px;}
+.fg input,.fg select{padding:.68rem .875rem;border:1.5px solid var(--border);border-radius:8px;font-size:.875rem;color:var(--navy);background:var(--light-gray);transition:all .2s;outline:none;}
+.fg input:focus,.fg select:focus{border-color:var(--navy);background:var(--white);box-shadow:0 0 0 3px rgba(13,27,62,.07);}
+.marks-section{background:var(--white);border-radius:20px;border:1px solid var(--border);margin-bottom:1.5rem;overflow:hidden;}
+.marks-section-header{padding:1.2rem 1.75rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.marks-section-header h3{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--navy);display:flex;align-items:center;gap:.5rem;}
+.marks-section-header h3 svg{width:18px;height:18px;color:var(--slate);}
+.subject-marks-block{border-bottom:1px solid var(--border);padding:1.2rem 1.75rem;}
+.subject-marks-block:last-child{border-bottom:none;}
+.subject-label{display:flex;align-items:center;gap:.7rem;margin-bottom:.85rem;}
+.subj-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.subj-name{font-weight:600;color:var(--navy);font-size:.9rem;}
+.subj-stats{margin-left:auto;display:flex;gap:.75rem;align-items:center;}
+.subj-stat{font-size:.73rem;color:var(--slate);background:var(--light-gray);padding:.22rem .6rem;border-radius:6px;font-weight:500;}
+.marks-input-row{display:grid;grid-template-columns:repeat(6,1fr);gap:.65rem;}
+.mark-input-group{display:flex;flex-direction:column;gap:.28rem;}
+.mark-input-group label{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate);text-align:center;}
+.mark-input-group input{text-align:center;padding:.58rem .4rem;border:1.5px solid var(--border);border-radius:8px;font-size:.9rem;font-weight:600;color:var(--navy);background:var(--light-gray);transition:all .2s;outline:none;width:100%;}
+.mark-input-group input:focus{border-color:var(--navy);background:var(--white);box-shadow:0 0 0 3px rgba(13,27,62,.07);}
+.dot-tel{background:#6366f1;}.dot-eng{background:#0ea5e9;}.dot-hin{background:#f59e0b;}.dot-mat{background:#10b981;}.dot-sci{background:#ef4444;}.dot-soc{background:#8b5cf6;}.dot-default{background:#94a3b8;}
+.form-actions{display:flex;align-items:center;justify-content:flex-end;gap:1rem;padding:1.4rem 1.75rem;background:var(--light-gray);border-top:1px solid var(--border);}
+@media(max-width:640px){.marks-input-row{grid-template-columns:repeat(3,1fr);}}
+</style>
+{% endblock %}
+{% block content %}
+{% set dot_map={'Telugu':'dot-tel','English':'dot-eng','Hindi':'dot-hin','Maths':'dot-mat','Science':'dot-sci','Social':'dot-soc'} %}
+<div class="edit-page">
+    <div class="breadcrumb">
+        <a href="/teacher_dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Dashboard
+        </a>
+        <span class="sep">›</span>
+        <a href="/student_details/{{ student.id }}">{{ student.name }}</a>
+        <span class="sep">›</span>
+        <span>Edit Marks</span>
+    </div>
+
+    <div class="student-id-card">
+        <div class="id-avatar">{{ student.name[0] }}</div>
+        <div class="id-info">
+            <h2>{{ student.name }}</h2>
+            <p>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                Roll No: {{ student.roll_number }} &nbsp;&middot;&nbsp; Edit Marks &amp; Details
+            </p>
+        </div>
+    </div>
+
+    <form method="POST">
+        <div class="form-section">
+            <div class="form-section-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Personal Details
+            </div>
+            <div class="form-grid">
+                <div class="fg">
+                    <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Full Name</label>
+                    <input type="text" name="name" value="{{ student.name }}" required>
+                </div>
+                <div class="fg">
+                    <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Father's Name</label>
+                    <input type="text" name="father_name" value="{{ student.father_name or '' }}">
+                </div>
+                <div class="fg">
+                    <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2"/></svg>Mobile Number</label>
+                    <input type="text" name="mobile_number" value="{{ student.mobile_number or '' }}">
+                </div>
+                <div class="fg">
+                    <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg>Class</label>
+                    <input type="text" name="class" value="{{ student.class or '10th' }}">
+                </div>
+                <div class="fg" style="grid-column:span 2;">
+                    <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Address</label>
+                    <input type="text" name="address" value="{{ student.address or '' }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="marks-section">
+            <div class="marks-section-header">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    Assessment Marks
+                </h3>
+                <span class="badge badge-navy">Max: 100 per assessment</span>
+            </div>
+
+            {% for subj in subjects %}
+            {% set sid=subj.id %}
+            {% set subj_assess=assessments.get(sid,{}) %}
+            {% set stats=subject_stats.get(sid,{}) %}
+            <div class="subject-marks-block">
+                <div class="subject-label">
+                    <span class="subj-dot {{ dot_map.get(subj.name,'dot-default') }}"></span>
+                    <span class="subj-name">{{ subj.name }}</span>
+                    <div class="subj-stats">
+                        <span class="subj-stat">Avg: {{ stats.percentage }}%</span>
+                        <span class="subj-stat">Grade: {{ stats.grade }}</span>
+                    </div>
+                </div>
+                <div class="marks-input-row">
+                    {% for atype in assessment_types %}
+                    <div class="mark-input-group">
+                        <label>{{ atype.replace('PREFINAL','PF') }}</label>
+                        <input type="number" name="marks_{{ sid }}_{{ atype }}" value="{{ subj_assess.get(atype,'') }}" min="0" max="100" step="0.5" placeholder="—">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="form-actions">
+                <a href="/student_details/{{ student.id }}" class="btn btn-outline">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    Cancel
+                </a>
+                <button type="submit" class="btn btn-gold">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    Save All Changes
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
