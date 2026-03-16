@@ -1,0 +1,427 @@
+{% extends "base.html" %}
+{% block title %}Home | Little Flower School{% endblock %}
+
+{% block extra_css %}
+<style>
+
+.hero{
+background:linear-gradient(135deg,var(--navy) 0%,#1a3a6e 100%);
+padding:5.5rem 2rem 4.5rem;
+position:relative;
+overflow:hidden;
+}
+
+.hero::before{
+content:'';
+position:absolute;
+top:-80px;
+right:-80px;
+width:420px;
+height:420px;
+border-radius:50%;
+background:radial-gradient(circle,rgba(201,168,76,.14),transparent 70%);
+}
+
+.hero::after{
+content:'';
+position:absolute;
+bottom:-60px;
+left:-60px;
+width:300px;
+height:300px;
+border-radius:50%;
+background:radial-gradient(circle,rgba(201,168,76,.07),transparent 70%);
+}
+
+.hero-inner{
+max-width:860px;
+margin:0 auto;
+text-align:center;
+position:relative;
+z-index:2;
+}
+
+.hero-badge{
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+background:rgba(201,168,76,.15);
+border:1px solid rgba(201,168,76,.32);
+color:var(--gold-light);
+padding:.38rem 1.1rem;
+border-radius:100px;
+font-size:.75rem;
+font-weight:600;
+letter-spacing:.07em;
+text-transform:uppercase;
+margin-bottom:1.75rem;
+}
+
+.hero-badge svg{
+width:13px;
+height:13px;
+}
+
+.hero h1{
+font-family:'Playfair Display',serif;
+font-size:clamp(2rem,5vw,3.4rem);
+color:var(--white);
+line-height:1.15;
+margin-bottom:1.2rem;
+}
+
+.hero h1 span{
+background:linear-gradient(135deg,var(--gold),var(--gold-light));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero p{
+color:rgba(255,255,255,.68);
+font-size:1.05rem;
+max-width:540px;
+margin:0 auto 2.5rem;
+line-height:1.7;
+}
+
+.hero-ctas{
+display:flex;
+gap:1rem;
+justify-content:center;
+flex-wrap:wrap;
+}
+
+.hero-ctas a{
+display:inline-flex;
+align-items:center;
+gap:.55rem;
+padding:.85rem 1.9rem;
+border-radius:10px;
+font-weight:600;
+font-size:.92rem;
+text-decoration:none;
+transition:all .2s;
+}
+
+.hero-ctas a svg{
+width:17px;
+height:17px;
+}
+
+.cta-primary{
+background:linear-gradient(135deg,var(--gold),var(--gold-light));
+color:var(--navy);
+box-shadow:0 4px 20px rgba(201,168,76,.4);
+}
+
+.cta-primary:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 28px rgba(201,168,76,.5);
+}
+
+.cta-secondary{
+background:rgba(255,255,255,.08);
+color:var(--white);
+border:1.5px solid rgba(255,255,255,.2);
+}
+
+.cta-secondary:hover{
+background:rgba(255,255,255,.14);
+}
+
+.stats-bar{
+background:var(--white);
+border-bottom:1px solid var(--border);
+padding:1.6rem 2rem;
+}
+
+.stats-inner{
+max-width:800px;
+margin:0 auto;
+display:flex;
+justify-content:center;
+gap:4rem;
+flex-wrap:wrap;
+}
+
+.stat-item{
+text-align:center;
+}
+
+.stat-number{
+font-family:'Playfair Display',serif;
+font-size:1.9rem;
+font-weight:700;
+color:var(--navy);
+line-height:1;
+}
+
+.stat-number span{
+color:var(--gold);
+}
+
+.stat-label{
+font-size:.74rem;
+color:var(--slate);
+font-weight:500;
+text-transform:uppercase;
+letter-spacing:.06em;
+margin-top:.25rem;
+}
+
+.section{
+padding:3.5rem 2rem;
+}
+
+.section-header{
+text-align:center;
+margin-bottom:2.25rem;
+}
+
+.section-header h2{
+font-family:'Playfair Display',serif;
+font-size:1.9rem;
+color:var(--navy);
+}
+
+.section-header p{
+color:var(--slate);
+margin-top:.5rem;
+font-size:.9rem;
+}
+
+.portal-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:1.5rem;
+max-width:780px;
+margin:0 auto;
+}
+
+.portal-card{
+background:var(--white);
+border-radius:20px;
+border:1.5px solid var(--border);
+padding:2.25rem;
+text-align:center;
+transition:all .25s;
+position:relative;
+overflow:hidden;
+}
+
+.portal-card::before{
+content:'';
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:4px;
+}
+
+.portal-card.student::before{
+background:linear-gradient(90deg,#3b82f6,#60a5fa);
+}
+
+.portal-card.teacher::before{
+background:linear-gradient(90deg,var(--gold),var(--gold-light));
+}
+
+.portal-card:hover{
+transform:translateY(-4px);
+box-shadow:var(--shadow-lg);
+border-color:transparent;
+}
+
+.portal-icon{
+width:70px;
+height:70px;
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:0 auto 1.25rem;
+}
+
+.portal-icon svg{
+width:32px;
+height:32px;
+}
+
+.portal-card.student .portal-icon{
+background:#eff6ff;
+color:#2563eb;
+}
+
+.portal-card.teacher .portal-icon{
+background:#fffbeb;
+color:#92400e;
+}
+
+.portal-card h3{
+font-family:'Playfair Display',serif;
+font-size:1.3rem;
+color:var(--navy);
+margin-bottom:.6rem;
+}
+
+.portal-card p{
+color:var(--slate);
+font-size:.855rem;
+line-height:1.65;
+margin-bottom:1.75rem;
+}
+
+.portal-card a{
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.72rem 1.7rem;
+border-radius:10px;
+font-weight:600;
+font-size:.88rem;
+text-decoration:none;
+transition:all .2s;
+}
+
+.portal-card.student a{
+background:#eff6ff;
+color:#1d4ed8;
+}
+
+.portal-card.student a:hover{
+background:#1d4ed8;
+color:#fff;
+}
+
+.portal-card.teacher a{
+background:linear-gradient(135deg,var(--gold),var(--gold-light));
+color:var(--navy);
+}
+
+.portal-card.teacher a:hover{
+box-shadow:0 4px 16px rgba(201,168,76,.4);
+}
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="hero">
+
+<div class="hero-inner">
+
+<div class="hero-badge">
+
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M9 11l3 3L22 4"/>
+<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+</svg>
+
+Results Portal
+
+</div>
+
+<h1>
+Student Results<br>
+<span>Management Portal</span>
+</h1>
+
+<p>
+Track academic progress, view assessments, and download official mark sheets — all in one secure portal for Little Flower School.
+</p>
+
+<div class="hero-ctas">
+
+<a href="/student_login" class="cta-primary">
+Student Portal
+</a>
+
+<a href="/teacher_login" class="cta-secondary">
+Teacher Access
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<div class="stats-bar">
+
+<div class="stats-inner">
+
+<div class="stat-item">
+<div class="stat-number">40<span>+</span></div>
+<div class="stat-label">Students Enrolled</div>
+</div>
+
+<div class="stat-item">
+<div class="stat-number">6</div>
+<div class="stat-label">Core Subjects</div>
+</div>
+
+<div class="stat-item">
+<div class="stat-number">6</div>
+<div class="stat-label">Assessments</div>
+</div>
+
+<div class="stat-item">
+<div class="stat-number">10<span>th</span></div>
+<div class="stat-label">Class</div>
+</div>
+
+</div>
+
+</div>
+
+
+<section class="section">
+
+<div class="section-header">
+<h2>Choose Your Portal</h2>
+<p>Secure login for students and teachers</p>
+</div>
+
+<div class="portal-grid">
+
+<div class="portal-card student">
+
+<div class="portal-icon">👨‍🎓</div>
+
+<h3>Student Portal</h3>
+
+<p>
+View marks across subjects, check grades, and download your official mark memo.
+</p>
+
+<a href="/student_login">
+Login with Roll No.
+</a>
+
+</div>
+
+
+<div class="portal-card teacher">
+
+<div class="portal-icon">👩‍🏫</div>
+
+<h3>Teacher Portal</h3>
+
+<p>
+Manage student records, update marks, and generate reports instantly.
+</p>
+
+<a href="/teacher_login">
+Teacher Login
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+{% endblock %}
