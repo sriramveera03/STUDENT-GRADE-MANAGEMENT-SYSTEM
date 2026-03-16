@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% block title %}Teacher Dashboard | Little Flower School{% endblock %}
+{% block extra_css %}
+<style>
+.teacher-page{padding:2.5rem 2rem;max-width:1200px;margin:0 auto;}
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;}
+.page-header h1{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--navy);display:flex;align-items:center;gap:.6rem;}
+.page-header h1 svg{width:26px;height:26px;color:var(--slate);}
+.page-header p{color:var(--slate);font-size:.86rem;margin-top:.25rem;}
+.header-actions{display:flex;gap:.75rem;flex-wrap:wrap;}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:1rem;margin-bottom:2rem;}
+.stat-card{background:var(--white);border-radius:14px;border:1px solid var(--border);padding:1.2rem 1.4rem;display:flex;align-items:center;gap:.9rem;}
+.stat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.stat-icon svg{width:20px;height:20px;}
+.stat-icon.blue{background:#eff6ff;color:#2563eb;}
+.stat-icon.gold{background:#fffbeb;color:#d97706;}
+.stat-icon.green{background:#f0fdf4;color:#16a34a;}
+.stat-icon.purple{background:#f5f3ff;color:#7c3aed;}
+.stat-text .value{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;color:var(--navy);line-height:1;}
+.stat-text .label{font-size:.72rem;color:var(--slate);font-weight:500;margin-top:.2rem;}
+.table-card{background:var(--white);border-radius:20px;border:1px solid var(--border);overflow:hidden;}
+.table-toolbar{padding:1.2rem 1.75rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;justify-content:space-between;}
+.table-toolbar h2{font-family:'Playfair Display',serif;font-size:1.08rem;color:var(--navy);display:flex;align-items:center;gap:.5rem;}
+.table-toolbar h2 svg{width:17px;height:17px;color:var(--slate);}
+.search-box{position:relative;flex:1;max-width:280px;}
+.search-box input{width:100%;padding:.58rem 1rem .58rem 2.4rem;border:1.5px solid var(--border);border-radius:10px;font-size:.86rem;color:var(--navy);background:var(--light-gray);outline:none;transition:all .2s;}
+.search-box input:focus{border-color:var(--navy);background:var(--white);}
+.search-icon{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--slate);pointer-events:none;}
+.students-table{width:100%;border-collapse:collapse;font-size:.86rem;}
+.students-table th{background:var(--light-gray);padding:.7rem 1.2rem;text-align:left;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate);border-bottom:1px solid var(--border);white-space:nowrap;}
+.students-table td{padding:.88rem 1.2rem;border-bottom:1px solid var(--border);color:var(--navy);vertical-align:middle;}
+.students-table tr:last-child td{border-bottom:none;}
+.students-table tr:hover td{background:#f8faff;}
+.student-name-cell{display:flex;align-items:center;gap:.7rem;}
+.mini-avatar{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--navy),#1a3a6e);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0;font-family:'Playfair Display',serif;}
+.roll-badge{display:inline-block;background:var(--light-gray);color:var(--slate);padding:.18rem .6rem;border-radius:6px;font-size:.78rem;font-weight:600;font-family:monospace;}
+.action-btns{display:flex;gap:.45rem;align-items:center;}
+.btn-sm{display:inline-flex;align-items:center;gap:.3rem;padding:.38rem .85rem;border-radius:7px;font-size:.77rem;font-weight:600;text-decoration:none;transition:all .15s;white-space:nowrap;}
+.btn-sm svg{width:13px;height:13px;}
+.btn-sm-view{background:#eff6ff;color:#1d4ed8;}
+.btn-sm-view:hover{background:#1d4ed8;color:#fff;}
+.btn-sm-edit{background:#fffbeb;color:#92400e;}
+.btn-sm-edit:hover{background:var(--gold);color:var(--navy);}
+.table-footer{padding:.9rem 1.75rem;border-top:1px solid var(--border);font-size:.78rem;color:var(--slate);background:var(--light-gray);display:flex;align-items:center;justify-content:space-between;}
+</style>
+{% endblock %}
+{% block content %}
+<div class="teacher-page">
+    <div class="page-header">
+        <div>
+            <h1>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Teacher Dashboard
+            </h1>
+            <p>Manage student records and academic performance</p>
+        </div>
+        <div class="header-actions">
+            <a href="/print_all_students" class="btn btn-gold">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Export All Students PDF
+            </a>
+            <a href="/logout" class="btn btn-outline">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Sign Out
+            </a>
+        </div>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div class="stat-text"><div class="value">{{ students|length }}</div><div class="label">Total Students</div></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+            <div class="stat-text"><div class="value">6</div><div class="label">Core Subjects</div></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+            <div class="stat-text"><div class="value">6</div><div class="label">Assessment Types</div></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+            <div class="stat-text"><div class="value">10th</div><div class="label">Current Class</div></div>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <div class="table-toolbar">
+            <h2>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                All Students
+            </h2>
+            <div class="search-box">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="studentSearch" placeholder="Search by name or roll number..." oninput="filterStudents()">
+            </div>
+        </div>
+        <table class="students-table" id="studentsTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Roll No.</th>
+                    <th>Student Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="studentsBody">
+                {% for student in students %}
+                <tr data-name="{{ student[2]|lower }}" data-roll="{{ student[1]|lower }}">
+                    <td style="color:var(--slate);font-size:.8rem;">{{ loop.index }}</td>
+                    <td><span class="roll-badge">{{ student[1] }}</span></td>
+                    <td>
+                        <div class="student-name-cell">
+                            <div class="mini-avatar">{{ student[2][0] }}</div>
+                            <span style="font-weight:500;">{{ student[2] }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="action-btns">
+                            <a href="/student_details/{{ student[0] }}" class="btn-sm btn-sm-view">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                View
+                            </a>
+                            <a href="/update/{{ student[0] }}" class="btn-sm btn-sm-edit">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                Edit Marks
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="table-footer">
+            <span id="countLabel">Showing {{ students|length }} students</span>
+            <span>Little Flower Primary &amp; High School &middot; Class 10th</span>
+        </div>
+    </div>
+</div>
+<script>
+function filterStudents(){
+    const q=document.getElementById('studentSearch').value.toLowerCase();
+    const rows=document.querySelectorAll('#studentsBody tr');
+    let v=0;
+    rows.forEach(r=>{
+        const m=r.dataset.name.includes(q)||r.dataset.roll.includes(q);
+        r.style.display=m?'':'none';
+        if(m)v++;
+    });
+    document.getElementById('countLabel').textContent=`Showing ${v} student${v!==1?'s':''}`;
+}
+</script>
+{% endblock %}
