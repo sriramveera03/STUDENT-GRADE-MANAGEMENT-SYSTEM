@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}School Timings | Little Flower School{% endblock %}
+{% block extra_css %}
+<style>
+.info-page{padding:3rem 2rem;max-width:900px;margin:0 auto;}
+.info-hero{background:linear-gradient(135deg,var(--navy),#1a3a6e);border-radius:20px;padding:3rem;text-align:center;margin-bottom:2.5rem;position:relative;overflow:hidden;}
+.info-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.15),transparent 70%);}
+.info-hero .hero-icon{width:64px;height:64px;background:linear-gradient(135deg,var(--gold),var(--gold-light));border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;position:relative;z-index:1;}
+.info-hero .hero-icon svg{width:30px;height:30px;color:#4a3200;}
+.info-hero h1{font-family:'Playfair Display',serif;color:var(--white);font-size:2rem;margin-bottom:.5rem;position:relative;z-index:1;}
+.info-hero p{color:rgba(255,255,255,.58);position:relative;z-index:1;}
+.timings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;}
+.timing-card{background:var(--white);border-radius:16px;border:1px solid var(--border);padding:1.6rem;display:flex;align-items:flex-start;gap:1rem;}
+.timing-icon{width:48px;height:48px;border-radius:12px;background:#fffbeb;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.timing-icon svg{width:22px;height:22px;color:#d97706;}
+.timing-info h3{font-weight:600;color:var(--navy);margin-bottom:.25rem;}
+.timing-info p{font-size:.84rem;color:var(--slate);}
+.timing-info .time{font-size:1rem;font-weight:700;color:var(--navy);margin-top:.35rem;font-family:'Playfair Display',serif;}
+</style>
+{% endblock %}
+{% block content %}
+<div class="info-page">
+    <div class="breadcrumb">
+        <a href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Home</a>
+        <span class="sep">›</span><span>School Timings</span>
+    </div>
+    <div class="info-hero">
+        <div class="hero-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h1>School Timings</h1>
+        <p>Little Flower Primary &amp; High School daily schedule</p>
+    </div>
+    <div class="timings-grid">
+        <div class="timing-card">
+            <div class="timing-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+            <div class="timing-info"><h3>School Opens</h3><p>Gates open for students</p><div class="time">8:00 AM</div></div>
+        </div>
+        <div class="timing-card">
+            <div class="timing-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
+            <div class="timing-info"><h3>Assembly</h3><p>Morning prayers &amp; announcements</p><div class="time">8:15 AM</div></div>
+        </div>
+        <div class="timing-card">
+            <div class="timing-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+            <div class="timing-info"><h3>Classes Begin</h3><p>First period starts</p><div class="time">8:30 AM</div></div>
+        </div>
+        <div class="timing-card">
+            <div class="timing-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div class="timing-info"><h3>Lunch Break</h3><p>Mid-day meal &amp; recreation</p><div class="time">12:30 – 1:00 PM</div></div>
+        </div>
+        <div class="timing-card">
+            <div class="timing-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div class="timing-info"><h3>School Ends</h3><p>Last period &amp; dispersal</p><div class="time">4:30 PM</div></div>
+        </div>
+        <div class="timing-card">
+            <div class="timing-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div class="timing-info"><h3>Extra Classes</h3><p>Optional coaching &amp; sports</p><div class="time">4:30 – 5:30 PM</div></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
